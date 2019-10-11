@@ -13,8 +13,9 @@ config.json:
 
         "configs": {
             "/no/innovationgarage/elcheapoais/downsampler": { // object path
-                "storagepath": "data/downsampler.json",       // load and store properties here
+                "storagepath": "data/downsampler.json",       // load (and store) properties here
                 "writable": true                              // allow Set()
+                "persistable": true                           // Store changes to disk under storagepath
             },
             "/no/innovationgarage/elcheapoais/status": {
             }

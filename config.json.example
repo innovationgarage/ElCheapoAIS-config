@@ -5,7 +5,8 @@
     "configs": {
         "/no/innovationgarage/elcheapoais/downsampler": {
             "storagepath": "data/downsampler.json",
-            "writable": true
+            "writable": true,
+            "persistable": true
         },
         "/no/innovationgarage/elcheapoais/status": {
         }

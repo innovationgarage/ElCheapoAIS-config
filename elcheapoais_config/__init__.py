@@ -12,8 +12,9 @@ def timeout(to):
     return wrapper
         
 class ConfigObject(dbus.service.Object):
-    def __init__(self, conn, storagepath=None, writable=True, object_path='/no/innovationgarage/elcheapoais/config'):
+    def __init__(self, conn, storagepath=None, persistable=True, writable=True, object_path='/no/innovationgarage/elcheapoais/config'):
         self.storagepath = storagepath
+        self.persistable = persistable
         self.writable = writable
         if storagepath and os.path.exists(storagepath):
             with open(storagepath) as f:
@@ -39,10 +40,12 @@ class ConfigObject(dbus.service.Object):
     @dbus.service.method("org.freedesktop.DBus.Properties",
                          in_signature='ssv', out_signature='')
     def Set(self, interface_name, property_name, value):
+        if not self.writable:
+            raise Exception("Read only attribute: %s.%s" % (interface_name, property_name))
         if interface_name not in self.properties:
             self.properties[interface_name] = {}
         self.properties[interface_name][property_name] = value
-        if self.storagepath and self.writable:
+        if self.storagepath and self.persistable:
              with open(self.storagepath, "w") as f:
                  json.dump(self.properties, f)
         self.PropertiesChanged(interface_name, {property_name: value}, {})
