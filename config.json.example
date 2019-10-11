@@ -1,0 +1,13 @@
+{
+    "bus": "SessionBus",
+    "name": "no.innovationgarage.elcheapoais.config",
+
+    "configs": {
+        "/no/innovationgarage/elcheapoais/downsampler": {
+            "storagepath": "data/downsampler.json",
+            "writable": true
+        },
+        "/no/innovationgarage/elcheapoais/status": {
+        }
+    }
+}
