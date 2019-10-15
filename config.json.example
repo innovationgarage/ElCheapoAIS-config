@@ -1,5 +1,4 @@
 {
-    "bus": "SessionBus",
     "name": "no.innovationgarage.elcheapoais.config",
 
     "configs": {

@@ -60,7 +60,7 @@ def main():
                  
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-    bus = getattr(dbus, config.get("bus", "SessionBus"))()
+    bus = getattr(dbus, os.environ.get("ELCHEAPOAIS_DBUS", "SystemBus"))()
     name = dbus.service.BusName(config.get("name", "no.innovationgarage.elcheapoais.config"), bus)
 
     config_objects = {name: ConfigObject(bus, object_path=name, **args)
