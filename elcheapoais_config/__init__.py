@@ -22,10 +22,14 @@ class ConfigObject(dbus.service.Object):
         else:
             self.properties = {}
         dbus.service.Object.__init__(self, conn, object_path)
+        for interface_name, properties in self.properties.items():
+            self.PropertiesChanged(interface_name, properties, [])
     
     @dbus.service.signal('org.freedesktop.DBus.Properties', signature='sa{sv}as')
     def PropertiesChanged(self, interface_name, changed_properties, invalidated_properties):
-        pass
+        print("%s: %s" % (interface_name, ", ".join(
+            ["%s=%s" % item for item in changed_properties.items()]
+            + ["%s.del" % name for name in invalidated_properties])))
 
     @dbus.service.method("org.freedesktop.DBus.Properties",
                          in_signature='ss', out_signature='v')
@@ -63,5 +67,5 @@ def main():
                       for name, args in config["configs"].items()}
 
     loop = gi.repository.GLib.MainLoop()
-    print("Running example signal emitter service.")
+    print("Config server running...")
     loop.run()
